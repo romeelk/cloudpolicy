@@ -1,0 +1,14 @@
+policies:
+    - name: add-vm-tag-policy
+      description: |
+        Adds a tag to a virtual machines
+      resource: azure.vm
+      filters:
+        - type: value
+          key: name
+          value: ExamVm
+      actions:
+       - type: tag
+         tag: Environment
+         value: Devs
+         bad code
