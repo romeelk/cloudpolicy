@@ -1,4 +1,4 @@
-## Cloud Goverance with Cloud Custodian
+## Cloud Governance with Cloud Custodian
 
 I have recently being doing some work around Governance and Compliance in Azure using Azure policy. Azure policy is the out of the box
 policy engine that Microsoft provide as part of your Azure subscription. It uses a declarative syntax using JSON to define policies
