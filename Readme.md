@@ -159,6 +159,46 @@ custodian report --output-dir=. --format grid --field tags=tags addtag.yml
 
 Make sure you run custodian run before as it uses the resources.json generated for the policy file!
 
+## Pipeline first steps
+
+So we have demonstrated it from the CLI. But the reality is in most organizations teams develop software, products, update and manage cloud infrastructure.
+This means to make this process consistent and repeatable and driven from changes made via source control we need a CI pipeline. In this example, I will
+use an Azure pipeline using Azure DevOps. This can be applied to any other CI tool of choice such as Jenkins or Git Lab ..
+
+To accomplish this I created a public project in my Azure DevOps organization. I then integrated Azure pipelines with Github as the source control. This allowed me to
+create the following:
+
+```
+trigger:
+- master
+
+jobs:
+  - job: 'Validate'
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    steps:
+      - checkout: self
+      - task: UsePythonVersion@0
+        displayName: "Set Python Version"
+        inputs:
+          versionSpec: '3.7'
+          architecture: 'x64'
+      - script: pip install --upgrade pip
+        displayName: Upgrade pip
+      - script: pip install c7n c7n_azure
+        displayName: Install custodian
+      - script: custodian validate stopped-vm.yml
+        displayName: Validate policy file
+  ```
+
+This simple pipeline is the equivalent of compiling code in a laneguage such as Java, C# and then getting feedback if the code checkin broke the build.
+
+The key part is the script step Validate policy file which is like a linter step to check the policy file.
+
+Saving and running the pipeline produces:
+
+![alt text](azurepipeline.PNG "Running Cloud custodian CI pipeline")
+
 ## Other scenarios
 
 The above demonstration was a small example of a policy effect. However, there are other scenarios organistaions may consider to increase
@@ -177,7 +217,7 @@ afterthought.
 That was a pretty basic example of Cloud Custodian. Personally I prefer YAML syntax to JSON. For me JSON is very machine oriented
 and the nesting becomes a real headache to understand. With YAML the definition is more human readable. 
 
-To really make this repeatable and automated I would suggest it is part of a code compliance CI/CD pipeline. For me this is where 
+To really make this repeatable and automated the CI/CD pipeline is a must. For me this is where 
 policy engine tools become really useful. Organisations want to bake into their application lifecycle effective governance and security
 instead of waiting for a manual gate  (security team fails app) to fail just before an application goes into production.
 
