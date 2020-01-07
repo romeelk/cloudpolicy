@@ -6,9 +6,8 @@ policies:
       filters:
         - type: value
           key: name
-          value: ExamVm
+          value: examdevbox
       actions:
        - type: tag
          tag: Environment
          value: Devs
-         bad code

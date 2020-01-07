@@ -2,3 +2,11 @@ cloud_custodian/
 custodian/
 .DS_Store
 create_sp.sh
+add-vm-tag-policy/custodian-run.log
+add-vm-tag-policy/metadata.json
+add-vm-tag-policy/resources.json
+stopped-vm/custodian-run.log
+stopped-vm/metadata.json
+stopped-vm/resources.json
+cloud-custodian
+.addtag.yml.swp

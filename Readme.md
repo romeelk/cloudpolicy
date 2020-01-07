@@ -1,10 +1,10 @@
 ## Cloud Governance with Cloud Custodian
 
-I have recently being doing some work around Governance and Compliance in Azure using Azure policy. Azure policy is the out of the box
+I have recently being doing some work around governance and compliance in Azure using Azure policy. Azure policy is the out of the box
 policy engine that Microsoft provide as part of your Azure subscription. It uses a declarative syntax using JSON to define policies
 (security, audits and others) governing your compute, network and storage resources. Azure policy can be used to prevent resources
 from being provisioned if not compliant with a policy as a well as provding information on policy for governance and audit purposes as well.
-Please refer to the official documentation for further details:https://docs.microsoft.com/en-us/azure/governance/policy/overview
+Please refer to the official documentation for further details: https://docs.microsoft.com/en-us/azure/governance/policy/overview
 
 One of my friends who works in security and risk mentioned an open source tool called Cloud Custodian. Being interested in open source
 i decided to check it out.
@@ -81,11 +81,11 @@ policies:
       filters:
         - type: value
           key: name
-          value: ExamVm
+          value: examdevbox
       actions:
        - type: tag
          tag: Environment
-         value: Dev
+         value: Devs
 ```
 Destilling the above the key components are:
 * resource: azure.vm - This is the compute provider in Azure
@@ -99,15 +99,18 @@ Using the cloud custodian cli I can now apply the policy!:
 
 ```
 custodian run --output-dir=. addtag.yml
-Authenticated [Azure CLI | 80c301f8-0098-4963-8ef1-f53ae4a6173]
-2019-12-08 18:34:54,757: custodian.policy:INFO policy:add-vm-tag-policy resource:azure.vm region: count:1 time:1.13
-2019-12-08 18:34:54,762: custodian.azure.tagging.Tag:INFO Action 'tag' modified 'ExamVm' in resource group 'EXAMDEVBOXRG'.
-2019-12-08 18:34:54,763: custodian.policy:INFO policy:add-vm-tag-policy action:tag resources:1 execution_time:0.00
-
+2020-01-07 11:43:47,304: custodian.azure.session:INFO Authenticated [Azure CLI | 8669867b-c6be-419c-8aff-e49945115767]
+2020-01-07 11:43:48,006: custodian.policy:INFO policy:add-vm-tag-policy resource:azure.vm region: count:1 time:0.70
+2020-01-07 11:43:48,009: custodian.azure.tagging.Tag:INFO Action 'tag' modified 'examdevbox' in resource group 'RG-MVP-EXAMDEVBOX'.
+2020-01-07 11:43:48,014: custodian.policy:INFO policy:add-vm-tag-policy action:tag resources:1 execution_time:0.01
 ```
 
 Once the policy engine runs it prints out the result. In the above example it found a VM called ExamVM in resource group 
 and tagged it!
+
+See screenshot:
+
+![alt text](custodianazuretag.PNG "Tagged VM")
 
 ## Validating your policy
 
@@ -121,7 +124,7 @@ policies:
       filters:
         - type: value
           key: name
-          value: ExamVm
+          value: examdevbox
       actions:
        - type: tag
          tag: Environment
@@ -139,6 +142,35 @@ Traceback (most recent call last):
 ```
 This helps the failure feedback loop, because once in a CI/CD pipeline you can make sure your teams are not checking in
 policies whose syntax is incorrect!
+
+## Running reports
+
+I followed the online docs to run the report but was having no luck. After a few tries i got it working:
+
+```
+custodian report --output-dir=. --format grid --field tags=tags addtag.yml
+
++------------+------------+-------------------+-------------------------------------+-------------------------+
+| name       | location   | resourceGroup     | properties.hardwareProfile.vmSize   | tags                    |
++============+============+===================+=====================================+=========================+
+| examdevbox | westeurope | RG-MVP-EXAMDEVBOX | Standard_F8s_v2                     | {'Environment': 'Devs'} |
++------------+------------+-------------------+-------------------------------------+-------------------------+
+```
+
+Make sure you run custodian run before as it uses the resources.json generated for the policy file!
+
+## Other scenarios
+
+The above demonstration was a small example of a policy effect. However, there are other scenarios organistaions may consider to increase
+their security or governance of their cloud environment. These include:
+
+* Preventing Public IP being provisioned
+* ensuring storage accounts are secured with HTTPS
+
+Just like Azure policies Cloud custodian allows security to be baked into the development lifecycle through concepts such as shift left and fail fast.
+By leveraging this tool via code and CI/CD practises security engineers/consultants, development teams and DevOps engineers can ensure security and governance are not an
+afterthought.
+
 
 ## Next steps and my take on it
 
