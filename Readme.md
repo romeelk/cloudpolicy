@@ -193,7 +193,7 @@ jobs:
 
 This simple pipeline is the equivalent of compiling code in a laneguage such as Java, C# and then getting feedback if the code checkin broke the build.
 
-The key part is the script step Validate policy file which is like a linter step to check the policy file.
+The key part is the script step 'Validate policy' file which is like a linter step to check the policy file.
 
 Saving and running the pipeline produces:
 
@@ -202,10 +202,10 @@ Saving and running the pipeline produces:
 ## Other scenarios
 
 The above demonstration was a small example of a policy effect. However, there are other scenarios organistaions may consider to increase
-their security or governance of their cloud environment. These include:
+their security or governance of their cloud environment. These include for example cases such as:
 
 * Preventing Public IP being provisioned
-* ensuring storage accounts are secured with HTTPS
+* Ensuring storage accounts are secured with HTTPS
 
 Just like Azure policies Cloud custodian allows security to be baked into the development lifecycle through concepts such as shift left and fail fast.
 By leveraging this tool via code and CI/CD practises security engineers/consultants, development teams and DevOps engineers can ensure security and governance are not an
@@ -218,6 +218,6 @@ That was a pretty basic example of Cloud Custodian. Personally I prefer YAML syn
 and the nesting becomes a real headache to understand. With YAML the definition is more human readable. 
 
 To really make this repeatable and automated the CI/CD pipeline is a must. For me this is where 
-policy engine tools become really useful. Organisations want to bake into their application lifecycle effective governance and security
-instead of waiting for a manual gate  (security team fails app) to fail just before an application goes into production.
+policy engine tools become really useful. Organisations want to bake into their cloud environment lifecycle effective governance and security
+instead of waiting for a manual gate (security team fails app) to fail just before an application goes into production.
 
