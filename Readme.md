@@ -1,13 +1,13 @@
 ## Cloud Governance with Cloud Custodian
 
-I have recently being doing some work around governance and compliance in Azure using Azure policy. Azure policy is the out of the box
+I have recently been doing some work around governance and compliance in Azure using Azure policy. Azure policy is the out of the box
 policy engine that Microsoft provide as part of your Azure subscription. It uses a declarative syntax using JSON to define policies
 (security, audits and others) governing your compute, network and storage resources. Azure policy can be used to prevent resources
 from being provisioned if not compliant with a policy as a well as provding information on policy for governance and audit purposes as well.
 Please refer to the official documentation for further details: https://docs.microsoft.com/en-us/azure/governance/policy/overview
 
 One of my friends who works in security and risk mentioned an open source tool called Cloud Custodian. Being interested in open source
-i decided to check it out.
+I decided to check it out.
 
 ## Multi cloud rules engine
 
@@ -68,10 +68,10 @@ Next use azure cli to set your default subscription
 az account set --subscription 80c301f8-0098-4963-8ef1-f53ae4a6173
 ```
 
-## Defning my first policy
+## Defining my first policy
 
-So using the example from Cloud custodian article I decided to create try out the policy to tag an existing VM.
-I have an existing VM called ExamVm in a dev Azure subscription.
+So, using the example from Cloud custodian article I decided to create try out the policy to tag an existing VM.
+I have an existing VM called examdevbox in a dev Azure subscription.
 ```
 policies:
     - name: add-vm-tag-policy
@@ -87,15 +87,14 @@ policies:
          tag: Environment
          value: Devs
 ```
-Destilling the above the key components are:
+Distilling the above the key components are:
 * resource: azure.vm - This is the compute provider in Azure
-* filters: filter for on a compute vm with a value of: ExamVM
-* actions: Add the tag called Environment  with the value Dev
+* filters: filter for on a compute vm with a value of: examdevbox
+* actions: Add the tag called Environment with the value Devs
 
 For further information on filters:https://github.com/cloud-custodian/cloud-custodian/blob/master/docs/source/filters.rst
 
-
-Using the cloud custodian cli I can now apply the policy!:
+Using the cloud custodian cli I can now apply the policy!
 
 ```
 custodian run --output-dir=. addtag.yml
@@ -105,7 +104,7 @@ custodian run --output-dir=. addtag.yml
 2020-01-07 11:43:48,014: custodian.policy:INFO policy:add-vm-tag-policy action:tag resources:1 execution_time:0.01
 ```
 
-Once the policy engine runs it prints out the result. In the above example it found a VM called ExamVM in resource group 
+Once the policy engine runs it prints out the result. In the above example it found a VM called examdevbox in resource group 
 and tagged it!
 
 See screenshot:
@@ -161,7 +160,9 @@ Make sure you run custodian run before as it uses the resources.json generated f
 
 ## Pipeline first steps
 
-So we have demonstrated it from the CLI. But the reality is in most organizations teams develop software, products, update and manage cloud infrastructure.
+[![Build Status](https://romstuff.visualstudio.com/Cloud%20custodian/_apis/build/status/romeelk.cloudpolicy?branchName=master)](https://romstuff.visualstudio.com/Cloud%20custodian/_build/latest?definitionId=23&branchName=master)
+
+So, we have demonstrated it from the CLI. But the reality is in most organizations’ teams develop software, products, update and manage cloud infrastructure.
 This means to make this process consistent and repeatable and driven from changes made via source control we need a CI pipeline. In this example, I will
 use an Azure pipeline using Azure DevOps. This can be applied to any other CI tool of choice such as Jenkins or Git Lab ..
 
@@ -201,7 +202,7 @@ Saving and running the pipeline produces:
 
 ## Other scenarios
 
-The above demonstration was a small example of a policy effect. However, there are other scenarios organistaions may consider to increase
+The above demonstration was a small example of a policy effect. However, there are other scenarios organistaions may consider increasing
 their security or governance of their cloud environment. These include for example cases such as:
 
 * Preventing Public IP being provisioned
@@ -211,13 +212,13 @@ Just like Azure policies Cloud custodian allows security to be baked into the de
 By leveraging this tool via code and CI/CD practises security engineers/consultants, development teams and DevOps engineers can ensure security and governance are not an
 afterthought.
 
-
 ## Next steps and my take on it
 
-That was a pretty basic example of Cloud Custodian. Personally I prefer YAML syntax to JSON. For me JSON is very machine oriented
+That was a pretty basic example of Cloud Custodian. Personally, I prefer YAML syntax to JSON. For me JSON is very machine oriented
 and the nesting becomes a real headache to understand. With YAML the definition is more human readable. 
 
 To really make this repeatable and automated the CI/CD pipeline is a must. For me this is where 
-policy engine tools become really useful. Organisations want to bake into their cloud environment lifecycle effective governance and security
+policy engine tools become useful. Organisations want to bake into their cloud environment lifecycle effective governance and security
 instead of waiting for a manual gate (security team fails app) to fail just before an application goes into production.
+
 
