@@ -197,7 +197,7 @@ The key part is the script step 'Validate policy' file which is like a linter st
 
 Saving and running the pipeline produces:
 
-![alt text](azurepipeline.PNG "Running Cloud custodian CI pipeline")
+![alt text](azurepipeline.png "Running Cloud custodian CI pipeline")
 
 ## Other scenarios
 
