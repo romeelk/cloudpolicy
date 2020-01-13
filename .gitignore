@@ -10,3 +10,7 @@ stopped-vm/metadata.json
 stopped-vm/resources.json
 cloud-custodian
 .addtag.yml.swp
+my-first-policy/action-stop
+my-first-policy/custodian-run.log
+my-first-policy/metadata.json
+my-first-policy/resources.json
