@@ -12,8 +12,10 @@ jobs:
         inputs:
           versionSpec: '3.7'
           architecture: 'x64'
-      - script: pip install --upgrade pip
-        displayName: Upgrade pip
+      - script: python3 -m venv custodian
+        displayName: Setup virtual environment
+      - script: source custodian/bin/activate
+        displayName: Set virtual environment
       - script: pip install c7n c7n_azure
         displayName: Install custodian
       - script: custodian validate stopped-vm.yml
