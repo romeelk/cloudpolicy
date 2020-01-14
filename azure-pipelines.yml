@@ -18,5 +18,7 @@ jobs:
         displayName: Set virtual environment
       - script: pip install c7n c7n_azure
         displayName: Install custodian
+      - script: pip install s3transfer==0.3.0
+        displayName: Install s3transfer
       - script: custodian validate stopped-vm.yml
         displayName: Validate policy file
