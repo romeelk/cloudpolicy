@@ -1,6 +1,6 @@
 ## Cloud Custodian with AWS
 
-Following from my original article about Cloud custodian ([Intro to Cloud custodian](Readme.md). I promised to follow it up with an article with an AWS example.
+Following from my original article about Cloud custodian ([Intro to Cloud custodian](Readme.md)). I promised to follow it up with an article with an AWS example.
 In this example I use a terraform deployment of the infrastructure using Azure pipelines
 
 ### Setting up the pipeline in Azure pipelines
