@@ -207,6 +207,8 @@ their security or governance of their cloud environment. These include for examp
 
 * Preventing Public IP being provisioned
 * Ensuring storage accounts are secured with HTTPS
+* Making sure to block resources being deployed in non-compliant regions (AWS and Azure)
+* Ensuring only approved Azure images or Amazon AMI images are used
 
 Just like Azure policies Cloud custodian allows security to be baked into the development lifecycle through concepts such as shift left and fail fast.
 By leveraging this tool via code and CI/CD practises security engineers/consultants, development teams and DevOps engineers can ensure security and governance are not an
