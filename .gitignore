@@ -15,3 +15,4 @@ my-first-policy/custodian-run.log
 my-first-policy/metadata.json
 my-first-policy/resources.json
 env/
+src/c7n
