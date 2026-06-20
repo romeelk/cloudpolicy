@@ -62,7 +62,7 @@ boto3==1.11.0
 botocore==1.14.0
 -e git+https://github.com/cloud-custodian/cloud-custodian.git@7d0d15bee144f59b0a46d38c534c7b925338cf84#egg=c7n
 -e git+https://github.com/cloud-custodian/cloud-custodian.git@7d0d15bee144f59b0a46d38c534c7b925338cf84#egg=c7n_azure&subdirectory=tools/c7n_azure
-certifi==2019.11.28
+certifi==2022.12.7
 cffi==1.13.2
 chardet==3.0.4
 colorama==0.4.3
