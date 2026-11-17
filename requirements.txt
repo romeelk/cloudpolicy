@@ -85,7 +85,7 @@ msrest==0.6.10
 msrestazure==0.6.4
 netaddr==0.7.19
 oauthlib==4.0.1
-paramiko==2.10.1
+paramiko==5.0.0
 portalocker==1.5.2
 pycparser==2.19
 Pygments==2.20.0
